@@ -13,8 +13,7 @@ void displayMe(void) {
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-  glDrawArrays(GL_TRIANGLES, 0, 3);
-  glDrawArrays(GL_TRIANGLES, 3, 3);
+  Triangle::DrawArrays();
 
   glDisableVertexAttribArray(0);
 
@@ -24,22 +23,23 @@ void displayMe(void) {
 void InitializeGlutCallbacks() { glutDisplayFunc(displayMe); }
 
 void CreateVertexBuffer() {
-  Vector3f Vertices[6];
-  Vertices[0] = Vector3f(p, p, 0.0f);
-  Vertices[1] = Vector3f(1.0f, p, 0.0f);
-  Vertices[2] = Vector3f(0.0f, 1.0f, 0.0f);
-  Vertices[3] = Vector3f(-p, -p, 0.0f);
-  Vertices[4] = Vector3f(-1.0f, -p, 0.0f);
-  Vertices[5] = Vector3f(0.0f, -1.0f, 0.0f);
+  uint triangles_size = 3 * Triangle::triangles.size();
+  Vector3f* Vertices = new Vector3f[triangles_size];
+  Triangle::FillVertexArray(Vertices);
 
   glGenBuffers(1, &VBO);
   glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, triangles_size * sizeof(Vector3f), Vertices,
+               GL_STATIC_DRAW);
 }
 
 int main(int argc, char** argv) {
-  std::cin >> p;
-  std::cout << "entered the number";
+  for (float x = -0.95; x < 0.95; x += 0.1) {
+    Vector3f a(x, x, 0);
+    Vector3f b(x, x + 0.05, 0);
+    Vector3f c(x + 0.05, x + 0.05, 0);
+    new Triangle(a, b, c);
+  }
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
   glutInitWindowSize(400, 300);

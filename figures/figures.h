@@ -1,4 +1,5 @@
 #pragma once
+#include <GL/glew.h>
 #include <vector>
 
 struct Vector3f {
@@ -16,13 +17,15 @@ struct Vector3f {
 class Triangle {
  public:
   Triangle(Vector3f x, Vector3f y, Vector3f z);
-  void FillVertexArray();
-  void DrawArrays();
 
-  int id;
+  int m_id;
+  Vector3f m_x, m_y, m_z;
+
+  static void FillVertexArray(Vector3f* Vertices);
+  static void DrawArrays();
+  static std::vector<Triangle> triangles;
 
  private:
-  Vector3f m_x, m_y, m_z;
+  void FillVertexArrayCT(Vector3f* Vertices);
+  void DrawArraysCT();
 };
-
-std::vector<Triangle> triangles;
