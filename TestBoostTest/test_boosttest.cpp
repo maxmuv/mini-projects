@@ -1,6 +1,3 @@
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdisabled-macro-expansion"
-
 #define BOOST_TEST_MAIN
 #define BOOST_TEST_DYN_LINK
 #include <boost/test/unit_test.hpp>
@@ -30,4 +27,3 @@ BOOST_AUTO_TEST_CASE(my_test) {
 
 BOOST_AUTO_TEST_SUITE_END()
 
-#pragma clang diagnostic pop
