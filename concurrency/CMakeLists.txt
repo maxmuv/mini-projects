@@ -4,3 +4,4 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_subdirectory(hello_concurrency_world)
 add_subdirectory(accumulation)
+add_subdirectory(hierarchical_mutex)
